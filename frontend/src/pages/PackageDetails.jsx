@@ -12,7 +12,7 @@ const PackageDetails = () => {
   useEffect(() => {
     const fetchPackageDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/packages/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages/${id}`);
         setPackageDetails(response.data);
         setLoading(false);
       } catch (error) {

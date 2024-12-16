@@ -58,7 +58,7 @@ const Navbar = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/admin" className="hover:text-blue-300">
+                <Link to="/admin/login" className="hover:text-blue-300">
                   Admin Panel
                 </Link>
               </DropdownMenuItem>

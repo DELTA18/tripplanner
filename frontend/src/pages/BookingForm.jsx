@@ -21,7 +21,7 @@ const BookingForm = () => {
   useEffect(() => {
     const fetchPackageDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/packages/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages/${id}`);
         setPrice(response.data.price);
       } catch (error) {
         console.error("Error fetching package details:", error);
@@ -82,8 +82,7 @@ const BookingForm = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/bookings", booking);
-      console.log("Booking Successful:", response.data);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASEURL}/api/bookings`, booking);
       alert("Booking successful!");
 
       // Generate Invoice PDF

@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/packages/allpackages");
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages/allpackages`);
         setPackages(response.data);
       } catch (err) {
         console.error("Error fetching packages", err);
@@ -37,7 +37,7 @@ const AdminDashboard = () => {
   // Handle package deletion
   const deletePackage = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/packages/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_BASEURL}/api/admin/packages/${id}`, {
         data: {
           name: username,
           password: password,

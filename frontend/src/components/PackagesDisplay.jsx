@@ -14,10 +14,9 @@ const PackagesDisplay = () => {
     useEffect(() => {
       const fetchPackages = async () => {
         try {
-          const response = await axios.get("http://localhost:5000/api/packages", {
+          const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages`, {
             params: { page: currentPage, limit: 8 },
           });
-  
           setPackages(response.data.packages);
           setTotalPages(response.data.totalPages);
           setLoading(false);
