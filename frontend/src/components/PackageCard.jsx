@@ -2,7 +2,8 @@ const PackageCard = ({ packageData }) => {
     const { title, description, _id, avaliableDates, additionalImages, coverImage, price } = packageData;
     console.log(_id)
     return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all transform hover:scale-105 duration-300 ease-in-out ">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all transform hover:scale-105 duration-300 ease-in-out "
+      onClick={() => window.location.href = `/package/${_id}`}>
         <img
           src={coverImage}
           alt={title}
