@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
@@ -40,6 +41,8 @@ const PackageDetails = () => {
     additionalImages,
   } = packageDetails;
 
+
+
   return (
     <div className="container mx-auto ">
       {/* Hero Section with Cover Image */}
@@ -58,7 +61,8 @@ const PackageDetails = () => {
         <p className="text-lg text-gray-600 text-center">{description}</p>
       </div>
       <div className="text-center mt-8">
-        <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+        <button className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+        onClick={() => window.location.href = `/package/${id}/book`}>
           Book Now
         </button>
       </div>
