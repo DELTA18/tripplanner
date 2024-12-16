@@ -1,33 +1,29 @@
-import { useState } from 'react'
-import {Button} from '@/components/ui/button'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import PackageDetails from './pages/PackageDetails';
+import BookingForm from './pages/BookingForm';
+import AdminPanel from './pages/AdminPanel';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <Button onClick={() => setCount((count) => count + 1)}>{count}</Button>
-      // 33% of the carousel width.
-<Carousel>
-  <CarouselContent>
-    <CarouselItem className="basis-1/3">...</CarouselItem>
-    <CarouselItem className="basis-1/3">...</CarouselItem>
-    <CarouselItem className="basis-1/3">...</CarouselItem>
-  </CarouselContent>
-</Carousel>
-
-
-    </>
-  )
+    <Router>
+      <div className="flex flex-col min-h-screen">
+        {/* Navbar */}
+        <Navbar />
+        
+        {/* Main Content */}
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/package/:id" element={<PackageDetails />} />
+            <Route path="/package/:id/book" element={<BookingForm />} />
+            <Route path="/admin" element={<AdminPanel />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;

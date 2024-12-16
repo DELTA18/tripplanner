@@ -2,6 +2,9 @@ const express = require('express');
 const Package = require('../models/packageModel');
 const router = express.Router();
 
+const authMiddleware = require('../middleware/auth');
+router.use(authMiddleware);
+
 router.post('/packages', async (req, res) => {
   const { title, description, price, availableDates, coverImage, additionalImages } = req.body;
 
