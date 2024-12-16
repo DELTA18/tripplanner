@@ -14,7 +14,7 @@ const PackageCard = ({ packageData }) => {
           <p className="text-gray-600 text-sm mb-4">{description}</p>
           <div className="flex justify-between items-center">
             <span className="text-blue-600 font-bold text-lg">${price}</span>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" onClick={() => window.location.href = `/package/${_id}`}>
               Book Now
             </button>
           </div>

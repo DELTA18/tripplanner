@@ -3,7 +3,7 @@ const Booking = require('../models/bookingModel');
 const Package = require('../models/packageModel');
 const router = express.Router();
 
-// POST /bookings - Create a new booking
+// Create a new booking
 router.post('/', async (req, res) => {
   const { packageId, customerName, email, phoneNumber, numberOfTravelers, specialRequests } = req.body;
 

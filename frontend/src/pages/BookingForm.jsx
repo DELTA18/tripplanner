@@ -1,20 +1,21 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import jsPDF from "jspdf";
 
 const BookingForm = () => {
   const { id } = useParams();
   const [price, setPrice] = useState();
-  const [customerName, setCustomerName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [customerName, setCustomerName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [numberOfTravelers, setNumberOfTravelers] = useState(1);
-  const [specialRequests, setSpecialRequests] = useState('');
+  const [specialRequests, setSpecialRequests] = useState("");
   const [totalPrice, setTotalPrice] = useState(price);
-  const [errors, setErrors] = useState({}); // For managing form errors
+  const [errors, setErrors] = useState({});
 
   // Fetch the package details
   useEffect(() => {
@@ -29,7 +30,6 @@ const BookingForm = () => {
     fetchPackageDetails();
   }, [id]);
 
-  // Update total price based on the number of travelers
   useEffect(() => {
     if (price) {
       setTotalPrice(price * numberOfTravelers);
@@ -46,13 +46,30 @@ const BookingForm = () => {
     if (!numberOfTravelers || numberOfTravelers < 1) newErrors.numberOfTravelers = "At least one traveler is required.";
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0; 
   };
 
+  // Generate PDF Invoice
+  const generateInvoice = (bookingData) => {
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Travel Agency Invoice", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Customer Name: ${bookingData.customerName}`, 20, 50);
+    doc.text(`Email: ${bookingData.email}`, 20, 60);
+    doc.text(`Phone Number: ${bookingData.phoneNumber}`, 20, 70);
+    doc.text(`Number of Travelers: ${bookingData.numberOfTravelers}`, 20, 80);
+    doc.text(`Special Requests: ${bookingData.specialRequests || "None"}`, 20, 90);
+    doc.text(`Total Price: $${bookingData.totalPrice}`, 20, 100);
+
+    doc.save(`Invoice_${bookingData.customerName}.pdf`);
+  };
+
+  // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate the form before submitting
     if (!validateForm()) return;
 
     const booking = {
@@ -68,6 +85,17 @@ const BookingForm = () => {
       const response = await axios.post("http://localhost:5000/api/bookings", booking);
       console.log("Booking Successful:", response.data);
       alert("Booking successful!");
+
+      // Generate Invoice PDF
+      generateInvoice({
+        id: response.data._id, 
+        customerName,
+        email,
+        phoneNumber,
+        numberOfTravelers,
+        specialRequests,
+        totalPrice,
+      });
     } catch (error) {
       if (error.response) {
         console.error("Booking failed:", error.response.data.message);
@@ -78,6 +106,8 @@ const BookingForm = () => {
   };
 
   return (
+    <>
+    <div className="py-8 bg-black w-full"></div>
     <div className="max-w-4xl mx-auto p-6 text-black">
       <h2 className="text-2xl font-bold mb-4">Booking Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -90,7 +120,6 @@ const BookingForm = () => {
           />
           {errors.customerName && <p className="text-red-500 text-sm">{errors.customerName}</p>}
         </div>
-
         <div>
           <Input
             type="email"
@@ -100,7 +129,6 @@ const BookingForm = () => {
           />
           {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
         </div>
-
         <div>
           <Input
             type="tel"
@@ -110,7 +138,6 @@ const BookingForm = () => {
           />
           {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
         </div>
-
         <div>
           <Input
             type="number"
@@ -121,19 +148,20 @@ const BookingForm = () => {
           />
           {errors.numberOfTravelers && <p className="text-red-500 text-sm">{errors.numberOfTravelers}</p>}
         </div>
-
         <Textarea
           placeholder="Enter any special requests"
           value={specialRequests}
           onChange={(e) => setSpecialRequests(e.target.value)}
         />
-
         <div className="flex items-center justify-between">
           <p>Total Price: ${totalPrice}</p>
-          <Button type="submit" variant="primary">Submit Booking</Button>
+          <Button type="submit" variant="primary">
+            Submit Booking
+          </Button>
         </div>
       </form>
     </div>
+    </>
   );
 };
 
