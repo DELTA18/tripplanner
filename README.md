@@ -35,7 +35,7 @@ The **Travel Agency Booking System** is a full-stack web application that allows
 
 - **Deployment**:
   - **Vercel**: Frontend deployment.
-  - **Heroku**: Backend deployment.
+  - **Render**: Backend deployment.
 
 ## Installation
 
@@ -59,17 +59,25 @@ git clone https://github.com/yourusername/travel-agency-booking-system.git
 cd backend
 npm install
 ```
-Set up your environment variables in the .env file (e.g., DB_URI, PORT).
-
+Set up your environment variables for backend
+```
+MONGODB_URI = mongodb://localhost:27017
+ADMIN_USERNAME = admin
+ADMIN_PASSWORD = password123
+```
 Start the backend server:
 
 ```
-npm start
+node app.js
 ```
 Install dependencies for the frontend:
 ```
 cd frontend
 npm install
+```
+set up environment variables for frontend
+```
+VITE_BACKEND_URI = your backend url
 ```
 Start the frontend development server:
 ```
@@ -81,6 +89,7 @@ Open your browser and navigate to http://localhost:5173 to use the application.
 
 ### 1. Browse Packages
 On the homepage, you can view a list of available tour packages. Each package provides essential details, including destination, price, and a brief description.
+Pagination is added for efficient retrival.
 
 ### 2. Book a Package
 To book a tour package:
@@ -102,10 +111,13 @@ This login gives you access to the admin panel where you can:
 
 ### Backend API Routes
 
-- **GET `/api/packages/allpackages`**: Retrieves all available tour packages.
+- **GET `/api/packages`**: Retrieves all available tour packages according to pagination.
+- **GET `/api/packages/allpackages`**: Retrieves all available tour packages(for admin display).
+- **GET `/api/:id`**: Retrieves package details.
 - **POST `/api/bookings`**: Submit a new booking request.
-- **GET `/api/bookings`**: Retrieve all bookings. This route is restricted to admin users only.
 - **POST `/api/admin/login`**: Admin login endpoint. Use the credentials provided above to access the admin panel.
+- **PUT `/api/admin/packages/:id`**:update package
+- **DELETE `/api/admin/packages/:id`**:update package
 
 ## Admin Login Details
 
