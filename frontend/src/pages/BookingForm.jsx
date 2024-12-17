@@ -17,11 +17,13 @@ const BookingForm = () => {
   const [totalPrice, setTotalPrice] = useState(price);
   const [errors, setErrors] = useState({});
 
+  const backendurl = import.meta.env.VITE_BACKEND_URI || "http://localhost:3000";
+
   // Fetch the package details
   useEffect(() => {
     const fetchPackageDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages/${id}`);
+        const response = await axios.get(`${backendurl}/api/packages/${id}`);
         setPrice(response.data.price);
       } catch (error) {
         console.error("Error fetching package details:", error);
@@ -82,7 +84,7 @@ const BookingForm = () => {
     };
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASEURL}/api/bookings`, booking);
+      const response = await axios.post(`${backendurl}/api/bookings`, booking);
       alert("Booking successful!");
 
       // Generate Invoice PDF

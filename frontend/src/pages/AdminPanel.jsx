@@ -21,11 +21,13 @@ const AdminDashboard = () => {
   const username = "admin";
   const password = "password123";
 
+  const backendurl = import.meta.env.VITE_BACKEND_URI || "http://localhost:3000";
+
   // Fetch all packages
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages/allpackages`);
+        const response = await axios.get(`${backendurl}/api/packages/allpackages`);
         setPackages(response.data);
       } catch (err) {
         console.error("Error fetching packages", err);
@@ -37,7 +39,7 @@ const AdminDashboard = () => {
   // Handle package deletion
   const deletePackage = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND_BASEURL}/api/admin/packages/${id}`, {
+      await axios.delete(`${backendurl}/api/admin/packages/${id}`, {
         data: {
           name: username,
           password: password,
@@ -61,7 +63,7 @@ const AdminDashboard = () => {
       additionalImages,
     };
     try {
-      const response = await axios.post("http://localhost:5000/api/admin/packages",{
+      const response = await axios.post(`${backendurl}/api/admin/packages`,{
         name: username,
         password: password,
       },
@@ -89,7 +91,7 @@ const AdminDashboard = () => {
       additionalImages,
     };
     try {
-      const response = await axios.put(`http://localhost:5000/api/admin/packages/${packageToEdit._id}`,
+      const response = await axios.put(`${backendurl}/api/admin/packages/${packageToEdit._id}`,
         {
             name: username,
             password: password,

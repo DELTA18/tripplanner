@@ -10,11 +10,13 @@ const PackagesDisplay = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-  
+
+    const backendurl = import.meta.env.VITE_BACKEND_URI || "http://localhost:3000";
+
     useEffect(() => {
       const fetchPackages = async () => {
         try {
-          const response = await axios.get(`https://tripplanner-backend-qbqv.onrender.com/api/packages`, {
+          const response = await axios.get(`${backendurl}/api/packages`, {
             params: { page: currentPage, limit: 8 },
           });
           setPackages(response.data.packages);

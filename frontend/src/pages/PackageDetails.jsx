@@ -9,10 +9,12 @@ const PackageDetails = () => {
   const [packageDetails, setPackageDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const backendurl = import.meta.env.VITE_BACKEND_URI || "http://localhost:3000";
+
   useEffect(() => {
     const fetchPackageDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages/${id}`);
+        const response = await axios.get(`${backendurl}/api/packages/${id}`);
         setPackageDetails(response.data);
         setLoading(false);
       } catch (error) {

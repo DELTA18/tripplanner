@@ -12,6 +12,8 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const backendurl = import.meta.env.VITE_BACKEND_URI || "http://localhost:3000";
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -22,7 +24,7 @@ const AdminLogin = () => {
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_BASEURL}/api/admin/login`, {
+      const response = await axios.post(`${backendurl}/api/admin/login`, {
         name: username,
         password: password,
       });
