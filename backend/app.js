@@ -9,7 +9,7 @@ connectDB();
 const app = express();
 app.use(cors(
    {
-    origin: 'https://tripplanner-tau.vercel.app/',
+    origin: 'https://tripplanner-backend-qbqv.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,}
 ));
