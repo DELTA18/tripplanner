@@ -14,7 +14,7 @@ const PackagesDisplay = () => {
     useEffect(() => {
       const fetchPackages = async () => {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/packages`, {
+          const response = await axios.get(`https://tripplanner-backend-qbqv.onrender.com/api/packages`, {
             params: { page: currentPage, limit: 8 },
           });
           setPackages(response.data.packages);
