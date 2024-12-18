@@ -51,7 +51,7 @@ Before running the application locally, make sure you have the following install
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/travel-agency-booking-system.git
+https://github.com/DELTA18/tripplanner
 
 ```
 2.Install dependencies for the backend:
